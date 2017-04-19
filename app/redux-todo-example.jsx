@@ -19,12 +19,17 @@ var reducer = (state = stateDlft, action) =>{
         return state;
     }
   };
-var store = redux.createStore(reducer);
 
-console.log('currentState',store.getState());
-var action ={
-  type: 'CHANGE_SEARCH_TEXT',
-  searchText: 'ur'
-}
-store.dispatch(action);
-console.log('currentState',store.getState());
+var store = redux.createStore(reducer, redux.compose(
+  window.devToolsExtension ? window.devToolsExtension() : f=> f
+));
+
+// we can call unsubscribe() to stop subscrition to store changes;
+var unsubscribe = store.subscribe(()=>{
+  var state = store.getState();
+  document.getElementById('app').innerHTML = state.searchText;
+});
+
+
+store.dispatch({type: 'CHANGE_SEARCH_TEXT', searchText: 'urbino'});
+store.dispatch({type: 'CHANGE_SEARCH_TEXT', searchText: 'nuno'});

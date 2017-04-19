@@ -12,7 +12,7 @@ var Index = require("Index");
 $(document).foundation();
 
 require('style!css!sass!applicationStyles');
-
+/*
 ReactDOM.render(
   <Router history={hashHistory}>
     <Route path="/" component={Main}>
@@ -21,6 +21,6 @@ ReactDOM.render(
   </Router>,
   document.getElementById('app')
 );
-
+*/
 require('./redux-todo-example.jsx');
 //require('./redux-example.jsx');

@@ -11,13 +11,28 @@ var reducer = (state = {name:'anonymous'}, action) =>{
         return state;
     }
   };
-var store = redux.createStore(reducer);
+var store = redux.createStore(reducer, redux.compose(
+  window.devToolsExtension ? window.devToolsExtension() : f=> f
+  /*
+  // the same as above
+  window.devToolsExtension ? window.devToolsExtension() : (f)=> {
+    return f;
+  }
+  */
+));
+// subcribe to cjhanges
+var unsubscribe = store.subscribe(()=>{
+  var state = store.getState();
+  console.log('Name is ', state.name);
+  document.getElementById('app').innerHTML = state.name;
+});
+// we can call unsubscribe() to stop subscrition to store changes;
 
-console.log('currentState',store.getState());
-
-var action ={
+store.dispatch({
   type: 'CHANGE_NAME',
   name: 'Urbino'
-}
-store.dispatch(action);
-console.log('currentState',store.getState());
+});
+store.dispatch({
+  type: 'CHANGE_NAME',
+  name: 'Nuno'
+});
